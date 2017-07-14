@@ -91,3 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+// We create this shortcut to access all of the functions in AppDelegate. EX: ad.saveContext()
+let ad = UIApplication.shared.delegate as! AppDelegate
+let context = ad.persistentContainer.viewContext // Shortcut for manage context
