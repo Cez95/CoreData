@@ -16,6 +16,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
     @IBOutlet weak var priceField: CustomTextField!
     @IBOutlet weak var detailsField: CustomTextField!
     @IBOutlet weak var thumbImage: UIImageView!
+    @IBOutlet weak var typeField: CustomTextField!
     
     
     var stores = [Store]()
@@ -115,6 +116,10 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
         let picture = Image(context: context)
         picture.image = thumbImage.image
         
+        let type = ItemType(context: context)
+        type.type = typeField.text
+        
+        
         
         // Handles item editing
         if itemToEdit == nil {
@@ -127,6 +132,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
             
         }
         
+        item.toItemType = type
         item.toImage = picture
 
         
@@ -143,9 +149,10 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
             item.details = description
         }
         
+        
+        
         // Assign store we selected
         item.toStore = stores[storePicker.selectedRow(inComponent: 0)] // item.toStore is the relationship between the two entitys.
-        
         ad.saveContext()
         
         _ = navigationController?.popViewController(animated: true) // This returns us to the main view after we press save.
@@ -162,6 +169,8 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
             priceField.text = "$\(item.price)"
             detailsField.text = item.details
             thumbImage.image = item.toImage?.image as? UIImage
+            typeField.text = item.toItemType?.type
+            
             
             // This will determine the store -> item relationship.
             if let store = item.toStore {

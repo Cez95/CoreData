@@ -83,7 +83,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     
     // Makes all rows at a height of 152.
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 152
+        return 180
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -95,6 +95,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         let dateSort = NSSortDescriptor(key: "created", ascending: false) // This is how we sort the data returned. "created" is an attribute that was in the Item entity
         let priceSort = NSSortDescriptor(key: "price", ascending: true) // Sorts the data retreived based on price attribute.
         let titleSort = NSSortDescriptor(key: "title", ascending: true) // Sorts the data retreived based on the title attribute.
+        let typeSort = NSSortDescriptor(key: "toItemType.type", ascending: true)
         
         // This determines how we organize the presented results on the segment bar at the top of the UI.
         if segment.selectedSegmentIndex == 0 {
@@ -108,6 +109,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         } else if segment.selectedSegmentIndex == 2 {
             
             fetchRequest.sortDescriptors = [titleSort] // This calls to sort by title
+        } else if segment.selectedSegmentIndex == 3 {
+            
+            fetchRequest.sortDescriptors = [typeSort]
         }
             
    
